@@ -36,4 +36,5 @@ margin: 0;
 
 export const Descricao = styled('p')`
 margin: 0;
+word-break: break-word;
 `;

@@ -1,37 +1,38 @@
-import { Button } from '@mui/material'
-import { Descricao, Foto, Informacoes, ItemLista, ListaStyled, Nome } from './Lista.style'
+import { Button } from "@mui/material";
+import {
+  Descricao,
+  Foto,
+  Informacoes,
+  ItemLista,
+  ListaStyled,
+  Nome,
+} from "./Lista.style";
+import { Pet } from "../../../data/@types/Pet";
+import { TextService } from "../../../data/services/TextService";
 
+interface ListaProps {
+  pets: Pet[];
+}
 
-export default function Lista() {
-    return (
-        <ListaStyled>
-            <ItemLista>
-                <Foto src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcAsTuwn07pci-ib_g6Yz8uqacuX9BXMftHw&usqp=CAU' />
-                <Informacoes>
-                    <Nome>Bidu</Nome>
-                    <Descricao>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et, fuga quibusdam! Natus autem odit vero veritatis assumenda iusto a tempora eveniet animi labore, beatae doloremque ducimus minus similique eum dolores.
-                    </Descricao>
-                    <Button
-                        variant={'contained'}
-                        fullWidth>Adotar</Button>
-                </Informacoes>
-            </ItemLista>
+export default function Lista(props: ListaProps) {
+  const tamanhoMaximoTexto = 200;
 
-            <ItemLista>
-                <Foto src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcAsTuwn07pci-ib_g6Yz8uqacuX9BXMftHw&usqp=CAU' />
-                <Informacoes>
-                    <Nome>Picareta</Nome>
-                    <Descricao>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et, fuga quibusdam! Natus autem odit vero veritatis assumenda iusto a tempora eveniet animi labore, beatae doloremque ducimus minus similique eum dolores.
-                    </Descricao>
-                    <Button
-                        variant={'contained'}
-                        fullWidth>Adotar</Button>
-                </Informacoes>
-            </ItemLista>
-
-        </ListaStyled>
-
-    )
+  return (
+    <ListaStyled>
+      {props.pets.map((pet) => (
+        <ItemLista key={pet.id}>
+          <Foto src={pet.foto} alt={pet.nome} />
+          <Informacoes>
+            <Nome>{pet.nome}</Nome>
+            <Descricao>
+              {TextService.limitarTexto(pet.historia, tamanhoMaximoTexto)}
+            </Descricao>
+            <Button variant={"contained"} fullWidth>
+              Adotar {pet.nome}
+            </Button>
+          </Informacoes>
+        </ItemLista>
+      ))}
+    </ListaStyled>
+  );
 }
